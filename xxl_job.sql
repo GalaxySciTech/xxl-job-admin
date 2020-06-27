@@ -1,280 +1,13 @@
-/*
- Navicat Premium Data Transfer
+#
+# XXL-JOB v2.2.0
+# Copyright (c) 2015-present, xuxueli.
 
- Source Server         : test
- Source Server Type    : MySQL
- Source Server Version : 50727
- Source Host           : 192.168.123.83:3306
- Source Schema         : xxl_job
-
- Target Server Type    : MySQL
- Target Server Version : 50727
- File Encoding         : 65001
-
- Date: 21/12/2019 14:00:00
-*/
+CREATE database if NOT EXISTS `xxl_job` default character set utf8mb4 collate utf8mb4_unicode_ci;
+use `xxl_job`;
 
 SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
 
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_BLOB_TRIGGERS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_BLOB_TRIGGERS`;
-CREATE TABLE `XXL_JOB_QRTZ_BLOB_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `BLOB_DATA` blob,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `XXL_JOB_QRTZ_BLOB_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `XXL_JOB_QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_CALENDARS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_CALENDARS`;
-CREATE TABLE `XXL_JOB_QRTZ_CALENDARS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `CALENDAR_NAME` varchar(200) NOT NULL,
-  `CALENDAR` blob NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`CALENDAR_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_CRON_TRIGGERS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_CRON_TRIGGERS`;
-CREATE TABLE `XXL_JOB_QRTZ_CRON_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `CRON_EXPRESSION` varchar(200) NOT NULL,
-  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `XXL_JOB_QRTZ_CRON_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `XXL_JOB_QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of XXL_JOB_QRTZ_CRON_TRIGGERS
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_CRON_TRIGGERS` VALUES ('getSchedulerFactoryBean', '10', '3', '0 0/5 * * * ? ', 'Asia/Shanghai');
-INSERT INTO `XXL_JOB_QRTZ_CRON_TRIGGERS` VALUES ('getSchedulerFactoryBean', '12', '5', '0 0/1 * * * ? ', 'Asia/Shanghai');
-INSERT INTO `XXL_JOB_QRTZ_CRON_TRIGGERS` VALUES ('getSchedulerFactoryBean', '13', '5', '0 0/1 * * * ? ', 'Asia/Shanghai');
-INSERT INTO `XXL_JOB_QRTZ_CRON_TRIGGERS` VALUES ('getSchedulerFactoryBean', '14', '5', '0 0/1 * * * ? ', 'Asia/Shanghai');
-INSERT INTO `XXL_JOB_QRTZ_CRON_TRIGGERS` VALUES ('getSchedulerFactoryBean', '15', '5', '0 0/1 * * * ? ', 'Asia/Shanghai');
-INSERT INTO `XXL_JOB_QRTZ_CRON_TRIGGERS` VALUES ('getSchedulerFactoryBean', '4', '3', '0 0/1 * * * ? ', 'Asia/Shanghai');
-INSERT INTO `XXL_JOB_QRTZ_CRON_TRIGGERS` VALUES ('getSchedulerFactoryBean', '6', '3', '0 0/5 * * * ? ', 'Asia/Shanghai');
-INSERT INTO `XXL_JOB_QRTZ_CRON_TRIGGERS` VALUES ('getSchedulerFactoryBean', '9', '3', '0 0/5 * * * ? ', 'Asia/Shanghai');
-COMMIT;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_FIRED_TRIGGERS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_FIRED_TRIGGERS`;
-CREATE TABLE `XXL_JOB_QRTZ_FIRED_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `ENTRY_ID` varchar(95) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `FIRED_TIME` bigint(13) NOT NULL,
-  `SCHED_TIME` bigint(13) NOT NULL,
-  `PRIORITY` int(11) NOT NULL,
-  `STATE` varchar(16) NOT NULL,
-  `JOB_NAME` varchar(200) DEFAULT NULL,
-  `JOB_GROUP` varchar(200) DEFAULT NULL,
-  `IS_NONCONCURRENT` varchar(1) DEFAULT NULL,
-  `REQUESTS_RECOVERY` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_JOB_DETAILS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_JOB_DETAILS`;
-CREATE TABLE `XXL_JOB_QRTZ_JOB_DETAILS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `JOB_NAME` varchar(200) NOT NULL,
-  `JOB_GROUP` varchar(200) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `JOB_CLASS_NAME` varchar(250) NOT NULL,
-  `IS_DURABLE` varchar(1) NOT NULL,
-  `IS_NONCONCURRENT` varchar(1) NOT NULL,
-  `IS_UPDATE_DATA` varchar(1) NOT NULL,
-  `REQUESTS_RECOVERY` varchar(1) NOT NULL,
-  `JOB_DATA` blob,
-  PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of XXL_JOB_QRTZ_JOB_DETAILS
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_JOB_DETAILS` VALUES ('getSchedulerFactoryBean', '10', '3', NULL, 'com.xxl.job.admin.core.jobbean.RemoteHttpJobBean', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
-INSERT INTO `XXL_JOB_QRTZ_JOB_DETAILS` VALUES ('getSchedulerFactoryBean', '12', '5', NULL, 'com.xxl.job.admin.core.jobbean.RemoteHttpJobBean', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
-INSERT INTO `XXL_JOB_QRTZ_JOB_DETAILS` VALUES ('getSchedulerFactoryBean', '13', '5', NULL, 'com.xxl.job.admin.core.jobbean.RemoteHttpJobBean', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
-INSERT INTO `XXL_JOB_QRTZ_JOB_DETAILS` VALUES ('getSchedulerFactoryBean', '14', '5', NULL, 'com.xxl.job.admin.core.jobbean.RemoteHttpJobBean', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
-INSERT INTO `XXL_JOB_QRTZ_JOB_DETAILS` VALUES ('getSchedulerFactoryBean', '15', '5', NULL, 'com.xxl.job.admin.core.jobbean.RemoteHttpJobBean', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
-INSERT INTO `XXL_JOB_QRTZ_JOB_DETAILS` VALUES ('getSchedulerFactoryBean', '4', '3', NULL, 'com.xxl.job.admin.core.jobbean.RemoteHttpJobBean', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
-INSERT INTO `XXL_JOB_QRTZ_JOB_DETAILS` VALUES ('getSchedulerFactoryBean', '6', '3', NULL, 'com.xxl.job.admin.core.jobbean.RemoteHttpJobBean', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
-INSERT INTO `XXL_JOB_QRTZ_JOB_DETAILS` VALUES ('getSchedulerFactoryBean', '9', '3', NULL, 'com.xxl.job.admin.core.jobbean.RemoteHttpJobBean', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787000737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F40000000000010770800000010000000007800);
-COMMIT;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_LOCKS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_LOCKS`;
-CREATE TABLE `XXL_JOB_QRTZ_LOCKS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `LOCK_NAME` varchar(40) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of XXL_JOB_QRTZ_LOCKS
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_LOCKS` VALUES ('getSchedulerFactoryBean', 'STATE_ACCESS');
-INSERT INTO `XXL_JOB_QRTZ_LOCKS` VALUES ('getSchedulerFactoryBean', 'TRIGGER_ACCESS');
-COMMIT;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_PAUSED_TRIGGER_GRPS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_PAUSED_TRIGGER_GRPS`;
-CREATE TABLE `XXL_JOB_QRTZ_PAUSED_TRIGGER_GRPS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_SCHEDULER_STATE
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_SCHEDULER_STATE`;
-CREATE TABLE `XXL_JOB_QRTZ_SCHEDULER_STATE` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
-  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of XXL_JOB_QRTZ_SCHEDULER_STATE
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_SCHEDULER_STATE` VALUES ('getSchedulerFactoryBean', 'localhost.localdomain1576480259905', 1576907996500, 5000);
-COMMIT;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_SIMPLE_TRIGGERS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_SIMPLE_TRIGGERS`;
-CREATE TABLE `XXL_JOB_QRTZ_SIMPLE_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `REPEAT_COUNT` bigint(7) NOT NULL,
-  `REPEAT_INTERVAL` bigint(12) NOT NULL,
-  `TIMES_TRIGGERED` bigint(10) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `XXL_JOB_QRTZ_SIMPLE_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `XXL_JOB_QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_SIMPROP_TRIGGERS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_SIMPROP_TRIGGERS`;
-CREATE TABLE `XXL_JOB_QRTZ_SIMPROP_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `STR_PROP_1` varchar(512) DEFAULT NULL,
-  `STR_PROP_2` varchar(512) DEFAULT NULL,
-  `STR_PROP_3` varchar(512) DEFAULT NULL,
-  `INT_PROP_1` int(11) DEFAULT NULL,
-  `INT_PROP_2` int(11) DEFAULT NULL,
-  `LONG_PROP_1` bigint(20) DEFAULT NULL,
-  `LONG_PROP_2` bigint(20) DEFAULT NULL,
-  `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
-  `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
-  `BOOL_PROP_1` varchar(1) DEFAULT NULL,
-  `BOOL_PROP_2` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `XXL_JOB_QRTZ_SIMPROP_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `XXL_JOB_QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_TRIGGERS
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_TRIGGERS`;
-CREATE TABLE `XXL_JOB_QRTZ_TRIGGERS` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `JOB_NAME` varchar(200) NOT NULL,
-  `JOB_GROUP` varchar(200) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `NEXT_FIRE_TIME` bigint(13) DEFAULT NULL,
-  `PREV_FIRE_TIME` bigint(13) DEFAULT NULL,
-  `PRIORITY` int(11) DEFAULT NULL,
-  `TRIGGER_STATE` varchar(16) NOT NULL,
-  `TRIGGER_TYPE` varchar(8) NOT NULL,
-  `START_TIME` bigint(13) NOT NULL,
-  `END_TIME` bigint(13) DEFAULT NULL,
-  `CALENDAR_NAME` varchar(200) DEFAULT NULL,
-  `MISFIRE_INSTR` smallint(2) DEFAULT NULL,
-  `JOB_DATA` blob,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  KEY `SCHED_NAME` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
-  CONSTRAINT `XXL_JOB_QRTZ_TRIGGERS_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `XXL_JOB_QRTZ_JOB_DETAILS` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of XXL_JOB_QRTZ_TRIGGERS
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_TRIGGERS` VALUES ('getSchedulerFactoryBean', '10', '3', '10', '3', NULL, 1576908300000, 1576908000000, 5, 'WAITING', 'CRON', 1576837474000, 0, NULL, 2, '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGERS` VALUES ('getSchedulerFactoryBean', '12', '5', '12', '5', NULL, 1576908060000, 1576908000000, 5, 'WAITING', 'CRON', 1568950820000, 0, NULL, 2, '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGERS` VALUES ('getSchedulerFactoryBean', '13', '5', '13', '5', NULL, 1576908060000, 1576908000000, 5, 'WAITING', 'CRON', 1568950817000, 0, NULL, 2, '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGERS` VALUES ('getSchedulerFactoryBean', '14', '5', '14', '5', NULL, 1576908060000, 1576908000000, 5, 'WAITING', 'CRON', 1568950805000, 0, NULL, 2, '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGERS` VALUES ('getSchedulerFactoryBean', '15', '5', '15', '5', NULL, 1576908060000, 1576908000000, 5, 'WAITING', 'CRON', 1568950826000, 0, NULL, 2, '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGERS` VALUES ('getSchedulerFactoryBean', '4', '3', '4', '3', NULL, 1576908060000, 1576908000000, 5, 'WAITING', 'CRON', 1576837477000, 0, NULL, 2, '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGERS` VALUES ('getSchedulerFactoryBean', '6', '3', '6', '3', NULL, 1576908300000, 1576908000000, 5, 'WAITING', 'CRON', 1576837467000, 0, NULL, 2, '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGERS` VALUES ('getSchedulerFactoryBean', '9', '3', '9', '3', NULL, 1576908300000, 1576908000000, 5, 'WAITING', 'CRON', 1576837472000, 0, NULL, 2, '');
-COMMIT;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_TRIGGER_GROUP
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_TRIGGER_GROUP`;
-CREATE TABLE `XXL_JOB_QRTZ_TRIGGER_GROUP` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `app_name` varchar(64) NOT NULL COMMENT '执行器AppName',
-  `title` varchar(12) NOT NULL COMMENT '执行器名称',
-  `order` tinyint(4) NOT NULL DEFAULT '0' COMMENT '排序',
-  `address_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '执行器地址类型：0=自动注册、1=手动录入',
-  `address_list` varchar(512) DEFAULT NULL COMMENT '执行器地址列表，多地址逗号分隔',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of XXL_JOB_QRTZ_TRIGGER_GROUP
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_GROUP` VALUES (3, 'cl-task', 'cl-task', 1, 1, '127.0.0.1:9999');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_GROUP` VALUES (5, 'x-project-task', 'xproject', 1, 0, NULL);
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_GROUP` VALUES (6, 'sas-task', 'sas-task', 1, 1, '127.0.0.1:9997');
-COMMIT;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_TRIGGER_INFO
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_TRIGGER_INFO`;
-CREATE TABLE `XXL_JOB_QRTZ_TRIGGER_INFO` (
+CREATE TABLE `xxl_job_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `job_group` int(11) NOT NULL COMMENT '执行器主键ID',
   `job_cron` varchar(128) NOT NULL COMMENT '任务执行CRON',
@@ -294,38 +27,14 @@ CREATE TABLE `XXL_JOB_QRTZ_TRIGGER_INFO` (
   `glue_remark` varchar(128) DEFAULT NULL COMMENT 'GLUE备注',
   `glue_updatetime` datetime DEFAULT NULL COMMENT 'GLUE更新时间',
   `child_jobid` varchar(255) DEFAULT NULL COMMENT '子任务ID，多个逗号分隔',
+  `trigger_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '调度状态：0-停止，1-运行',
+  `trigger_last_time` bigint(13) NOT NULL DEFAULT '0' COMMENT '上次调度时间',
+  `trigger_next_time` bigint(13) NOT NULL DEFAULT '0' COMMENT '下次调度时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Records of XXL_JOB_QRTZ_TRIGGER_INFO
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (3, 3, '0 0/5 * * * ? ', 'usdt扫块任务', '2019-04-15 09:06:53', '2019-04-16 02:55:34', 'pie', '', 'FIRST', 'usdtSyn', '', 'COVER_EARLY', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-04-15 09:06:53', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (4, 3, '0 0/1 * * * ? ', '充值同步', '2019-04-15 09:07:29', '2019-04-15 11:52:33', 'pie', '', 'FIRST', 'depositSyn', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-04-15 09:07:29', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (5, 3, '0 0/5 * * * ? ', 'btc扫块任务', '2019-04-16 02:55:13', '2019-04-20 06:50:06', 'pie', '', 'FIRST', 'btcSyn', '', 'COVER_EARLY', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-04-16 02:55:13', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (6, 3, '0 0/5 * * * ? ', 'eth扫块任务', '2019-04-16 03:01:10', '2019-09-25 16:57:09', 'pie', '', 'FIRST', 'ethSyn', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-04-16 03:01:10', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (7, 3, '0 0/1 * * * ? ', 'usdt归集', '2019-04-16 05:56:47', '2019-04-16 05:56:47', 'pie', '', 'FIRST', 'collectUsdt', '', 'COVER_EARLY', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-04-16 05:56:47', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (8, 3, '0 0/1 * * * ? ', 'btc归集', '2019-04-20 08:14:50', '2019-04-20 08:15:05', 'pie', '', 'FIRST', 'collectBtc', '', 'COVER_EARLY', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-04-20 08:14:50', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (9, 3, '0 0/5 * * * ? ', 'eth归集', '2019-04-22 07:59:35', '2019-12-20 19:23:59', 'pie', '', 'FIRST', 'collectEth', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-04-22 07:59:35', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (10, 3, '0 0/5 * * * ? ', 'erc归集', '2019-09-19 19:16:53', '2019-12-20 19:23:48', 'pie', '', 'FIRST', 'collectErc', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-09-19 19:16:53', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (11, 5, '0 0/5 * * * ? ', '动态排行榜分润', '2019-09-20 01:57:48', '2019-09-24 17:50:15', 'pie', '', 'FIRST', 'dynamicPoolDistribution', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-09-20 01:57:48', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (12, 5, '0 0/1 * * * ? ', '处理法币超时', '2019-09-20 11:19:32', '2019-09-20 11:19:32', 'pie', '', 'FIRST', 'legalTimeOut', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-09-20 11:19:32', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (13, 5, '0 0/1 * * * ? ', '处理静态匹配', '2019-09-20 11:19:54', '2019-09-20 11:19:54', 'pie', '', 'FIRST', 'staticMatch', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-09-20 11:19:54', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (14, 5, '0 0/1 * * * ? ', '处理静态收益完成', '2019-09-20 11:20:19', '2019-09-20 11:20:19', 'pie', '', 'FIRST', 'staticProfitFinish', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-09-20 11:20:19', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (15, 5, '0 0/1 * * * ? ', '处理静态超时', '2019-09-20 11:20:37', '2019-09-20 11:20:37', 'pie', '', 'FIRST', 'staticTimeOut', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-09-20 11:20:37', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (16, 5, '0 0/1 * * * ? ', '处理公会战争结束', '2019-09-20 11:21:02', '2019-09-20 11:21:02', 'pie', '', 'FIRST', 'unionFightEnd', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-09-20 11:21:02', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (17, 5, '0 0/1 * * * ? ', '处理公会战争匹配', '2019-09-20 11:21:21', '2019-09-20 11:21:21', 'pie', '', 'FIRST', 'unionFightMatch', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-09-20 11:21:21', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (18, 6, '0/1 * * * * ?', '静态分发处理', '2019-12-16 15:16:45', '2019-12-16 15:16:45', 'pie', '', 'FIRST', 'static', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-12-16 15:16:45', '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_INFO` VALUES (19, 6, '0 0/1 * * * ? ', '层级奖分发', '2019-12-16 15:17:15', '2019-12-16 15:17:15', 'pie', '', 'FIRST', 'dynamic', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2019-12-16 15:17:15', '');
-COMMIT;
-
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_TRIGGER_LOG
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_TRIGGER_LOG`;
-CREATE TABLE `XXL_JOB_QRTZ_TRIGGER_LOG` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `xxl_job_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `job_group` int(11) NOT NULL COMMENT '执行器主键ID',
   `job_id` int(11) NOT NULL COMMENT '任务，主键ID',
   `executor_address` varchar(255) DEFAULT NULL COMMENT '执行器地址，本次执行的地址',
@@ -339,58 +48,71 @@ CREATE TABLE `XXL_JOB_QRTZ_TRIGGER_LOG` (
   `handle_time` datetime DEFAULT NULL COMMENT '执行-时间',
   `handle_code` int(11) NOT NULL COMMENT '执行-状态',
   `handle_msg` text COMMENT '执行-日志',
+  `alarm_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '告警状态：0-默认、1-无需告警、2-告警成功、3-告警失败',
   PRIMARY KEY (`id`),
-  KEY `I_trigger_time` (`trigger_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  KEY `I_trigger_time` (`trigger_time`),
+  KEY `I_handle_code` (`handle_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Records of XXL_JOB_QRTZ_TRIGGER_LOG
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (1, 6, 19, '127.0.0.1:9997', 'dynamic', '', NULL, 0, '2019-12-21 13:59:48', 200, '任务触发类型：手动触发<br>调度机器：172.17.0.1<br>执行器-注册方式：手动录入<br>执行器-地址列表：[127.0.0.1:9997]<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>触发调度：<br>address：127.0.0.1:9997<br>code：200<br>msg：null', '2019-12-21 13:59:48', 200, '');
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (2, 3, 4, '127.0.0.1:9999', 'depositSyn', '', NULL, 0, '2019-12-21 14:00:00', 200, '任务触发类型：Cron触发<br>调度机器：172.17.0.1<br>执行器-注册方式：手动录入<br>执行器-地址列表：[127.0.0.1:9999]<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>触发调度：<br>address：127.0.0.1:9999<br>code：200<br>msg：null', NULL, 0, NULL);
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (3, 3, 6, '127.0.0.1:9999', 'ethSyn', '', NULL, 0, '2019-12-21 14:00:00', 200, '任务触发类型：Cron触发<br>调度机器：172.17.0.1<br>执行器-注册方式：手动录入<br>执行器-地址列表：[127.0.0.1:9999]<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>触发调度：<br>address：127.0.0.1:9999<br>code：200<br>msg：null', NULL, 0, NULL);
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (4, 3, 9, '127.0.0.1:9999', 'collectEth', '', NULL, 0, '2019-12-21 14:00:00', 200, '任务触发类型：Cron触发<br>调度机器：172.17.0.1<br>执行器-注册方式：手动录入<br>执行器-地址列表：[127.0.0.1:9999]<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>触发调度：<br>address：127.0.0.1:9999<br>code：200<br>msg：null', NULL, 0, NULL);
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (5, 3, 10, '127.0.0.1:9999', 'collectErc', '', NULL, 0, '2019-12-21 14:00:00', 200, '任务触发类型：Cron触发<br>调度机器：172.17.0.1<br>执行器-注册方式：手动录入<br>执行器-地址列表：[127.0.0.1:9999]<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>触发调度：<br>address：127.0.0.1:9999<br>code：200<br>msg：null', NULL, 0, NULL);
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (6, 5, 12, NULL, 'legalTimeOut', '', NULL, 0, '2019-12-21 14:00:00', 500, '任务触发类型：Cron触发<br>调度机器：172.17.0.1<br>执行器-注册方式：自动注册<br>执行器-地址列表：null<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>调度失败：执行器地址为空<br><br>', NULL, 0, NULL);
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (7, 5, 13, NULL, 'staticMatch', '', NULL, 0, '2019-12-21 14:00:00', 500, '任务触发类型：Cron触发<br>调度机器：172.17.0.1<br>执行器-注册方式：自动注册<br>执行器-地址列表：null<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>调度失败：执行器地址为空<br><br>', NULL, 0, NULL);
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (8, 5, 14, NULL, 'staticProfitFinish', '', NULL, 0, '2019-12-21 14:00:00', 500, '任务触发类型：Cron触发<br>调度机器：172.17.0.1<br>执行器-注册方式：自动注册<br>执行器-地址列表：null<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>调度失败：执行器地址为空<br><br>', NULL, 0, NULL);
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_LOG` VALUES (9, 5, 15, NULL, 'staticTimeOut', '', NULL, 0, '2019-12-21 14:00:00', 500, '任务触发类型：Cron触发<br>调度机器：172.17.0.1<br>执行器-注册方式：自动注册<br>执行器-地址列表：null<br>路由策略：第一个<br>阻塞处理策略：单机串行<br>任务超时时间：0<br>失败重试次数：0<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>触发调度<<<<<<<<<<< </span><br>调度失败：执行器地址为空<br><br>', NULL, 0, NULL);
-COMMIT;
+CREATE TABLE `xxl_job_log_report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `trigger_day` datetime DEFAULT NULL COMMENT '调度-时间',
+  `running_count` int(11) NOT NULL DEFAULT '0' COMMENT '运行中-日志数量',
+  `suc_count` int(11) NOT NULL DEFAULT '0' COMMENT '执行成功-日志数量',
+  `fail_count` int(11) NOT NULL DEFAULT '0' COMMENT '执行失败-日志数量',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `i_trigger_day` (`trigger_day`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_TRIGGER_LOGGLUE
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_TRIGGER_LOGGLUE`;
-CREATE TABLE `XXL_JOB_QRTZ_TRIGGER_LOGGLUE` (
+CREATE TABLE `xxl_job_logglue` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `job_id` int(11) NOT NULL COMMENT '任务，主键ID',
   `glue_type` varchar(50) DEFAULT NULL COMMENT 'GLUE类型',
   `glue_source` mediumtext COMMENT 'GLUE源代码',
   `glue_remark` varchar(128) NOT NULL COMMENT 'GLUE备注',
-  `add_time` timestamp NULL DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `add_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Table structure for XXL_JOB_QRTZ_TRIGGER_REGISTRY
--- ----------------------------
-DROP TABLE IF EXISTS `XXL_JOB_QRTZ_TRIGGER_REGISTRY`;
-CREATE TABLE `XXL_JOB_QRTZ_TRIGGER_REGISTRY` (
+CREATE TABLE `xxl_job_registry` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `registry_group` varchar(255) NOT NULL,
+  `registry_group` varchar(50) NOT NULL,
   `registry_key` varchar(255) NOT NULL,
   `registry_value` varchar(255) NOT NULL,
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `i_g_k_v` (`registry_group`,`registry_key`,`registry_value`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `xxl_job_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_name` varchar(64) NOT NULL COMMENT '执行器AppName',
+  `title` varchar(12) NOT NULL COMMENT '执行器名称',
+  `address_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '执行器地址类型：0=自动注册、1=手动录入',
+  `address_list` varchar(512) DEFAULT NULL COMMENT '执行器地址列表，多地址逗号分隔',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Records of XXL_JOB_QRTZ_TRIGGER_REGISTRY
--- ----------------------------
-BEGIN;
-INSERT INTO `XXL_JOB_QRTZ_TRIGGER_REGISTRY` VALUES (6, 'EXECUTOR', 'sas-task', '172.17.0.1:9997', '2019-12-21 13:59:59');
-COMMIT;
+CREATE TABLE `xxl_job_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL COMMENT '账号',
+  `password` varchar(50) NOT NULL COMMENT '密码',
+  `role` tinyint(4) NOT NULL COMMENT '角色：0-普通用户、1-管理员',
+  `permission` varchar(255) DEFAULT NULL COMMENT '权限：执行器ID列表，多个逗号分割',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `i_username` (`username`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-SET FOREIGN_KEY_CHECKS = 1;
+CREATE TABLE `xxl_job_lock` (
+  `lock_name` varchar(50) NOT NULL COMMENT '锁名称',
+  PRIMARY KEY (`lock_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO `xxl_job_group`(`id`, `app_name`, `title`, `address_type`, `address_list`) VALUES (1, 'xxl-job-executor-sample', '示例执行器', 0, NULL);
+INSERT INTO `xxl_job_info`(`id`, `job_group`, `job_cron`, `job_desc`, `add_time`, `update_time`, `author`, `alarm_email`, `executor_route_strategy`, `executor_handler`, `executor_param`, `executor_block_strategy`, `executor_timeout`, `executor_fail_retry_count`, `glue_type`, `glue_source`, `glue_remark`, `glue_updatetime`, `child_jobid`) VALUES (1, 1, '0 0 0 * * ? *', '测试任务1', '2018-11-03 22:21:31', '2018-11-03 22:21:31', 'XXL', '', 'FIRST', 'demoJobHandler', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2018-11-03 22:21:31', '');
+INSERT INTO `xxl_job_user`(`id`, `username`, `password`, `role`, `permission`) VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL);
+INSERT INTO `xxl_job_lock` ( `lock_name`) VALUES ( 'schedule_lock');
+
+commit;
